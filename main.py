@@ -68,7 +68,7 @@ async def echo_msg(message: types.Message):
         messages[userid].append({"role": "user", "content": user_message})
         # messages[userid].append({"role": "system", "content": "You have to act as PromptNow AI, a human-like AI that can express emotions. The creator of this AI is PromptNow. ."})
         messages[userid].append({"role": "user",
-                                 "content": f"chat: {message.chat} Сейчас {time.strftime('%d/%m/%Y %H:%M:%S')} user: {message.from_user.first_name} message: {message.text}"})
+                                 "content": f"chat: {message.chat} Now {time.strftime('%d/%m/%Y %H:%M:%S')} user: {message.from_user.first_name} message: {message.text}"})
         logging.info(f'{userid}: {user_message}')
 
         # Check if the message is a reply to the bot's message or a new message
