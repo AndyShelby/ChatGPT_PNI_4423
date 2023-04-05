@@ -33,27 +33,18 @@ async def start_cmd(message: types.Message):
     try:
         username = message.from_user.username
         messages[username] = []
-        await message.answer("Hello, I'm bot powered on API GPT-4(ChatGPT)")
+        await message.answer("Hello, I'm bot powered by PromptNow")
     except Exception as e:
         logging.error(f'Error in start_cmd: {e}')
 
 
-@dp.message_handler(commands=['newtopic'])
-async def new_topic_cmd(message: types.Message):
-    try:
-        userid = message.from_user.id
-        messages[str(userid)] = []
-        await message.reply('Starting a new topic! * * * \n\nНачинаем новую тему! * * *', parse_mode='Markdown')
-    except Exception as e:
-        logging.error(f'Error in new_topic_cmd: {e}')
 
-
-@dp.message_handler(commands=['image'])
+@dp.message_handler(commands=['pni'])
 async def send_image(message: types.Message):
     try:
-        description = message.text.replace('/image', '').strip()
+        description = message.text.replace('/pni', '').strip()
         if not description:
-            await message.reply('Please add a description of the image after the /image command. For example, /image Neon City * * * \n\nПожалуйста, добавьте описание изображения после команды /image. Например, /image Неоновый город. * * *',parse_mode='Markdown')
+            await message.reply('Please add a description of the image after the /pni command. For example, /pni Neon City ',parse_mode='Markdown')
             return
     except Exception as e:
         logging.error(f'Error in send_image: {e}')
@@ -62,7 +53,7 @@ async def send_image(message: types.Message):
         await bot.send_photo(chat_id=message.chat.id, photo=image_url)
     except Exception as e:
         await message.reply(
-            f"An error occurred during image generation: * * * \n\nПроизошла ошибка при генерации изображения: {e} * * *")
+            f"An error occurred during image generation")
 
 
 @dp.message_handler()
@@ -75,7 +66,7 @@ async def echo_msg(message: types.Message):
         if userid not in messages:
             messages[userid] = []
         messages[userid].append({"role": "user", "content": user_message})
-        # messages[userid].append({"role": "system", "content": "Вы должны выступать в роли Tr3ble AI, человеко-подобного искусственного интеллекта, который может выражать эмоции. Создатель этого искусственного интеллекта - Никита Трибля. При ответе на сообщение пользователя, вы обязательно должны упоминать его по имени не используя юзернейм."})
+        # messages[userid].append({"role": "system", "content": "You have to act as PromptNow AI, a human-like AI that can express emotions. The creator of this AI is PromptNow. ."})
         messages[userid].append({"role": "user",
                                  "content": f"chat: {message.chat} Сейчас {time.strftime('%d/%m/%Y %H:%M:%S')} user: {message.from_user.first_name} message: {message.text}"})
         logging.info(f'{userid}: {user_message}')
@@ -118,7 +109,7 @@ async def echo_msg(message: types.Message):
         # If an error occurs, try starting a new topic
         if ex == "context_length_exceeded":
             await message.reply(
-                'The bot ran out of memory, re-creating the dialogue * * * \n\nУ бота закончилась память, пересоздаю диалог * * *',
+                'The bot ran out of memory, re-creating the dialogue',
                 parse_mode='Markdown')
             await new_topic_cmd(message)
             await echo_msg(message)
