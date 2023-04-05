@@ -77,7 +77,7 @@ async def echo_msg(message: types.Message):
         if should_respond:
             # Send a "processing" message to indicate that the bot is working
             processing_message = await message.reply(
-                'Your request is being processed...',
+                'Your request is being processed. Remember using /PNI to generate images',
                 parse_mode='Markdown')
 
             # Send a "typing" action to indicate that the bot is typing a response
