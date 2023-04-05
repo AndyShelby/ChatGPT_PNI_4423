@@ -33,7 +33,7 @@ async def start_cmd(message: types.Message):
     try:
         username = message.from_user.username
         messages[username] = []
-        await message.answer("Hello, I'm bot powered by PromptNow")
+        await message.answer("Hello, I'm the bot powered by PromptNow!* * * \n\Please add a description of the image after the /pni command. * * *")
     except Exception as e:
         logging.error(f'Error in start_cmd: {e}')
 
